@@ -1,0 +1,11 @@
+---
+
+# Debian OS family installation tasks
+
+- name: 'INSTALL | APT | Install system dependencies'
+  apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    update_cache: "{{ jupyterhub_apt_update_cache }}"
+    cache_valid_time: "{{ jupyterhub_apt_cache_valid_time }}"
+  with_items: "{{ jupyterhub_system_dependencies }}"

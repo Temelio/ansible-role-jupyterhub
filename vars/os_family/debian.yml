@@ -1,0 +1,7 @@
+---
+
+# Debian OS family variables
+
+_jupyterhub_system_dependencies:
+  - name: 'git'
+  - name: 'python3-pip'

@@ -1,0 +1,11 @@
+---
+
+# Manage installation tasks using pip
+
+- name: 'INSTALL | PIP | Install packages globaly'
+  pip:
+    name: "{{ item.name }}"
+    version: "{{ item.version | default(omit) }}"
+    executable: "{{ item.executable | default('pip3') }}"
+  with_items: "{{ jupyterhub_pip_packages }}"
+  when: "jupyterhub_install_globally | bool"

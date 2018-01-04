@@ -3,19 +3,32 @@ Role tests
 """
 
 import os
+import pytest
+
 from testinfra.utils.ansible_runner import AnsibleRunner
 
 testinfra_hosts = AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
 
-def test_hosts_file(host):
+@pytest.mark.parametrize('name', [
+    ('git'),
+    ('python3-pip'),
+])
+def test_system_packages(host, name):
     """
-    Ensure /etc/hosts file exists
+    Ensure system packages installed
     """
 
-    f = host.file('/etc/hosts')
+    assert host.package(name).is_installed
 
-    assert f.exists
-    assert f.user == 'root'
-    assert f.group == 'root'
+
+@pytest.mark.parametrize('name', [
+    ('jupyterhub'),
+])
+def test_pip_packages(host, name):
+    """
+    Ensure Pip packages installed
+    """
+
+    assert name in host.pip_package.get_packages(pip_path='pip3').keys()

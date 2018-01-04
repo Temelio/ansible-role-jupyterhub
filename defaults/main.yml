@@ -1,3 +1,17 @@
 ---
 
 # Defaults vars file for jupyterhub role
+
+# Package management
+jupyterhub_apt_update_cache: True
+jupyterhub_apt_cache_valid_time: 3600
+jupyterhub_system_dependencies: "{{ _jupyterhub_system_dependencies | default([]) }}"
+jupyterhub_pip_packages:
+  - name: 'jupyterhub'
+    version: '0.8.1'
+
+# Install method
+# * pip: use python packages on pypi
+jupyterhub_install_method: 'pip'
+jupyterhub_install_globally: True
+jupyterhub_manage_system_dependencies: True

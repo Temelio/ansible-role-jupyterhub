@@ -7,3 +7,22 @@
   tags:
     - 'role::jupyterhub'
     - 'role::jupyterhub::init'
+    - 'role::jupyterhub::install'
+
+
+- name: 'INSTALL | Manage JupyterHub system dependencies installation tasks'
+  include: "{{ role_path }}/tasks/install_{{ ansible_os_family | lower }}.yml"
+  become: True
+  when: "jupyterhub_manage_system_dependencies | bool"
+  tags:
+    - 'role::jupyterhub'
+    - 'role::jupyterhub::install'
+
+
+- name: 'INSTALL | Manage JupyterHub installation tasks using pip'
+  include: "{{ role_path }}/tasks/install_pip.yml"
+  become: True
+  when: "jupyterhub_install_method == 'pip'"
+  tags:
+    - 'role::jupyterhub'
+    - 'role::jupyterhub::install'
